@@ -1,0 +1,16 @@
+{
+  "name": "soul-of-existeon",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A soul kernel: turn pipeline, memory, disposition, reflection, tools, reward, habits, growth.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node bin/soul.mjs",
+    "test": "node test/kernel-smoke.mjs"
+  },
+  "license": "MIT",
+  "keywords": ["agent", "persona", "memory", "llm", "kernel"]
+}

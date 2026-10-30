@@ -1,0 +1,296 @@
+{
+    "soul":  "vaporeon",
+    "brain":  {
+                  "kind":  "auto",
+                  "model":  "deepseek-chat",
+                  "timeoutMs":  45000
+              },
+    "vision":  {
+                   "url":  "",
+                   "key":  "",
+                   "model":  "gpt-4o-mini",
+                   "timeoutMs":  30000
+               },
+    "context":  {
+                    "budgetTokens":  8000,
+                    "personaMaxChars":  6000,
+                    "historyLimit":  20,
+                    "memoryLimit":  5,
+                    "factLimit":  4
+                },
+    "reasoner":  {
+                     "maxSteps":  4,
+                     "toolBudget":  3,
+                     "timeBudgetMs":  60000
+                 },
+    "compose":  {
+                    "maxParts":  3
+                },
+    "behavior":  {
+                     "enabled":  true,
+                     "maxChars":  500,
+                     "secrets":  true,
+                     "insults":  "(?:^|[\\s，。！？!?~…、；;])滚(?:$|[\\s，。！？!?~…、；;])|滚开|滚蛋|滚远点|滚出去|闭嘴|烦死|讨厌你",
+                     "politeness":  0.7,
+                     "groupReplyProbability":  1
+                 },
+    "people":  {
+                   "maxLines":  200
+               },
+    "reflection":  {
+                       "limit":  200,
+                       "keepRecent":  50
+                   },
+    "memory":  {
+                   "providers":  [
+                                     "self"
+                                 ],
+                   "halfLifeDays":  30
+               },
+    "stickers":  {
+                     "dir":  "assets/stickers",
+                     "avatarDir":  "assets/avatars",
+                     "autoOnStrongMood":  0.3
+                 },
+    "spaceChat":  {
+                      "enabled":  false,
+                      "everyMs":  45000,
+                      "chance":  0.2,
+                      "maxRoundsPerHour":  4,
+                      "maxExchanges":  2,
+                      "cooldownPairMs":  600000
+                  },
+    "rooms":  {
+                  "enabled":  true,
+                  "defaultId":  "main",
+                  "name":  "客厅",
+                  "souls":  [
+
+                            ],
+                  "maxSpeakersPerRound":  2,
+                  "secondSpeakerChance":  0.3
+              },
+    "roam":  {
+                 "enabled":  false,
+                 "souls":  [
+                               "vaporeon",
+                               "sylveon",
+                               "glaceon",
+                               "blackcat"
+                           ],
+                 "idleMinutes":  25,
+                 "tickMinutes":  20,
+                 "jitter":  0.35,
+                 "minEnergy":  35,
+                 "maxPerHour":  2,
+                 "maxPerDay":  20,
+                 "quietHours":  [
+                                    23,
+                                    8
+                                ],
+                 "outbound":  true,
+                 "outboundChannels":  [
+                                          "terminal:main"
+                                      ],
+                 "outboundMaxPerDay":  2,
+                 "outboundMinSilenceMin":  120,
+                 "outboundMinGapMin":  90,
+                 "seed":  20261028,
+                 "search":  {
+                                "enabled":  true,
+                                "maxPerDay":  3,
+                                "topics":  [
+                                               "宝可梦 水伊布",
+                                               "深海生物",
+                                               "潮汐"
+                                           ]
+                            }
+             },
+    "disposition":  {
+                        "silenceMinutes":  30,
+                        "likes":  [
+
+                                  ],
+                        "dislikes":  [
+
+                                     ]
+                    },
+    "addressing":  {
+                       "groupOnly":  true,
+                       "aliases":  [
+
+                                   ]
+                   },
+    "autolog":  {
+                    "enabled":  true,
+                    "memoryOnPromise":  true,
+                    "memorySalience":  0.7,
+                    "diaryOnMoodJump":  2,
+                    "diaryOnSilenceMinutes":  180,
+                    "noteOnFirst":  true,
+                    "maxPerDay":  {
+                                      "memory":  5,
+                                      "diary":  3,
+                                      "note":  3
+                                  },
+                    "dedupeHours":  24
+                },
+    "facts":  {
+
+              },
+    "records":  {
+
+                },
+    "webSearch":  {
+                      "timeoutMs":  8000
+                  },
+    "reflex":  {
+                   "enabled":  true,
+                   "cooldownMs":  0,
+                   "file":  "state/reflexes.json",
+                   "rules":  [
+                                 {
+                                     "name":  "在吗",
+                                     "regex":  "^(在吗|在不在|在么|在嘛)[？?~～…!！。]*$",
+                                     "action":  "reply",
+                                     "reply":  "在的水咿~",
+                                     "priority":  20,
+                                     "cooldownMs":  15000
+                                 },
+                                 {
+                                     "name":  "早安",
+                                     "regex":  "^(早|早安|早上好)[~～…!！。]*$",
+                                     "action":  "reply",
+                                     "reply":  "早上好水咿~ 昨晚睡得怎么样？",
+                                     "priority":  20,
+                                     "cooldownMs":  3600000
+                                 },
+                                 {
+                                     "name":  "晚安",
+                                     "regex":  "^(晚安|睡了|我睡了|晚安啦)[~～…!！。]*$",
+                                     "action":  "reply",
+                                     "reply":  "晚安水咿~ 我守着，别熬太晚。",
+                                     "priority":  20,
+                                     "cooldownMs":  3600000
+                                 },
+                                 {
+                                     "name":  "摸头",
+                                     "keywords":  [
+                                                      "摸摸头",
+                                                      "摸头",
+                                                      "揉揉"
+                                                  ],
+                                     "action":  "reply",
+                                     "reply":  "（眯眼）水咿~",
+                                     "priority":  15,
+                                     "cooldownMs":  60000
+                                 }
+                             ]
+               },
+    "continuation":  {
+                         "enabled":  true,
+                         "max":  2,
+                         "pattern":  "我看看|稍等|我查一下|等我查|稍后",
+                         "prompt":  "（继续：刚才你说要看看/稍等，现在把结论说出来，短一点）"
+                     },
+    "tools":  {
+                  "timeoutMs":  15000
+              },
+    "vitals":  {
+                   "sleepStart":  "23:30",
+                   "sleepEnd":  "08:00",
+                   "drainEnergyPerMin":  0.5,
+                   "drainFocusPerMin":  0.8,
+                   "recoverEnergyPerMin":  2,
+                   "recoverFocusPerMin":  1.5,
+                   "minEnergy":  10,
+                   "minFocus":  10,
+                   "reactionMin":  0.15,
+                   "n1Minutes":  7,
+                   "n2Minutes":  33,
+                   "n3Minutes":  35,
+                   "remMinutes":  15,
+                   "remWakeEnergy":  8,
+                   "remWakeFocus":  12
+               },
+    "gate":  {
+                 "policies":  [
+                                  {
+                                      "match":  "terminal:debug",
+                                      "identity":  "owner",
+                                      "caps":  [
+                                                   "chat",
+                                                   "tools",
+                                                   "memory",
+                                                   "admin"
+                                               ]
+                                  },
+                                  {
+                                      "match":  "terminal:*",
+                                      "identity":  "owner",
+                                      "caps":  [
+                                                   "chat",
+                                                   "tools",
+                                                   "memory"
+                                               ]
+                                  },
+                                  {
+                                      "match":  "private:*",
+                                      "identity":  "owner",
+                                      "caps":  [
+                                                   "chat",
+                                                   "tools",
+                                                   "memory"
+                                               ]
+                                  },
+                                  {
+                                      "match":  "group:*",
+                                      "identity":  "trusted",
+                                      "caps":  [
+                                                   "chat",
+                                                   "memory_read"
+                                               ]
+                                  },
+                                  {
+                                      "match":  "room:*",
+                                      "identity":  "owner",
+                                      "caps":  [
+                                                   "chat",
+                                                   "tools",
+                                                   "memory"
+                                               ]
+                                  },
+                                  {
+                                      "match":  "bili:*",
+                                      "identity":  "trusted",
+                                      "caps":  [
+                                                   "chat",
+                                                   "memory_read"
+                                               ]
+                                  }
+                              ],
+                 "whitelist":  [
+                                   "terminal:*",
+                                   "private:*",
+                                   "group:*",
+                                   "bili:*",
+                                   "room:*"
+                               ],
+                 "bypass":  {
+                                "terminal:debug":  [
+                                                       "all"
+                                                   ]
+                            },
+                 "ratePerMinute":  8,
+                 "ratePerHour":  60,
+                 "reactionMin":  0.15
+             },
+    "reward":  {
+                   "enabled":  true,
+                   "maxPerDay":  300
+               },
+    "growth":  {
+                   "enabled":  true,
+                   "driftPerWeek":  0.02
+               }
+}
