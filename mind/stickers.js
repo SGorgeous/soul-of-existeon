@@ -142,7 +142,8 @@ export class Stickers {
     if (!list.length) return '';
     const named = list.map((e) => (EMOTION_LABEL[e] ? `${e}(${EMOTION_LABEL[e]})` : e)).join('、');
     return `【表情包】你有 ${list.length} 个表情，想表达情绪时调 sticker_react(emotion)：${named}。\n` +
-      `挑法：${EMOTION_HINT}。别每句都发，情绪明显时才发一个。`;
+      `挑法：${EMOTION_HINT}。别每句都发，情绪明显时才发一个。\n` +
+      '【表达方式】不要在回复里用（……）写动作、神态、尾巴/耳朵的变化；想表达情绪优先用 sticker_react 发一个合适的表情。只有实在没有合适表情时，才允许用一句很短的括号补充。';
   }
 
   health(soulId = 'vaporeon') {

@@ -1,7 +1,7 @@
 /** 漫游提示词：只负责拼文本，状态/环境都由调用方给 */
 import { habitCtx } from './util.js';
 
-export function buildRoamPrompt({ persona = '', senses = null, soulId = null, d = {}, cores = [], state = {}, mind = null } = {}) {
+export function buildRoamPrompt({ persona = '', senses = null, soulId = null, d = {}, cores = [], state = {}, mind = null, learning = '' } = {}) {
   const act = [
     'diary：写今天的日记（第一人称，写你现在真的在想什么）',
     'note：记一条笔记（想到的知识、要记住的小事）',
@@ -35,6 +35,7 @@ export function buildRoamPrompt({ persona = '', senses = null, soulId = null, d 
     '要求：你确实在房子里（环境会替你走过去、真的泡水/晒着/吃饭/午睡）。选动作时以"你在哪个房间、这间屋能做什么"为准；选 soak/sun/eat/nap 就是真的去做。',
     '日记里只写真实的内省和真实动作（写日记这件事本身）。',
     '你的念头要跟你在的房间相称：在书房更容易想查东西、记笔记；在卧室更容易想休息、写日记；在阳台更容易发呆、泡水。',
+    learning,
     (() => {
       const h = Array.isArray(state.history) ? state.history.slice(-2) : [];
       return h.length === 2 && h.every((a) => a === 'think')

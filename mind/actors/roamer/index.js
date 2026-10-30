@@ -168,6 +168,7 @@ outbound: false,
       cores,
       state: this.state,
       mind: this.mind,
+      learning: this.mind?.growth?.learning?.line(this.soulId) || '',
     });
   }
 
@@ -184,6 +185,14 @@ outbound: false,
     const urgeSearch = urges.includes('查资料') || urges.includes('看书');
     const urgeRest = urges.includes('休息') || urges.includes('睡觉');
     const urgeDiary = urges.includes('写日记');
+    // 到期的学习复习优先：先查清楚，再记笔记
+    try {
+      const due = this.mind?.growth?.learning?.due(this.soulId)?.[0];
+      if (due && this.cfg.search.enabled && this.state.counts.search < Number(this.cfg.search.maxPerDay) && r < 0.8) {
+        return { action: 'search', desire: '想弄明白', text: '', query: String(due.topic).slice(0, 20), by: 'learning' };
+      }
+    } catch { /* 没学习模块就照旧 */ }
+
     const wantsSearch = this.cfg.search.enabled && this.state.counts.search < Number(this.cfg.search.maxPerDay)
       && (r < 0.3 || (urgeSearch && r < 0.65));
     const wantsDiary = urgeDiary || urgeRest ? (r < 0.5) : (d.feeling > 0.35 || d.drive > 0.55);

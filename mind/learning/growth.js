@@ -10,7 +10,8 @@
  * 提示词里只给一句"你最近更熟练/更爱做…"，她自己知道。
  */
 import path from 'node:path';
-import { readJson, writeJson, readJsonl, appendJsonl } from '../store.js';
+import { Learning } from './curriculum.js';
+import { readJson, writeJson, readJsonl, writeJsonl, appendJsonl } from '../store.js';
 
 const SKILLS = ['search', 'note', 'diary', 'conversation', 'observation'];
 const TRAITS = ['curiosity', 'order', 'sociability', 'persistence'];
@@ -29,6 +30,7 @@ export class Growth {
       ...config,
     };
     this.logger = logger;
+    this.learning = new Learning({ root, config: config.learning || {} });
   }
 
   fileOf(soulId) { return path.join(this.root, 'state', 'souls', String(soulId), 'growth.json'); }
@@ -58,6 +60,7 @@ export class Growth {
     if (hit) { hit.n += 1; hit.lastAt = Date.now(); }
     else rows.push({ topic: t, n: 1, firstAt: Date.now(), lastAt: Date.now() });
     writeJsonl(file, rows, { keep: 200 });
+    try { this.learning.observeTopic(soulId, t); } catch { /* 忽略 */ }
     return rows;
   }
 
@@ -146,7 +149,11 @@ export class Growth {
   observeRoam(soulId, intent = {}, result = {}) {
     try {
       if (intent.action === 'search') { this.learn(soulId, { kind: 'search', text: String(intent.query || ''), count: 2, novelty: 0.7 }); this.noteInterest(soulId, String(intent.query || '').slice(0, 40)); }
-      else if (intent.action === 'note') this.learn(soulId, { kind: 'note', text: String(intent.text || ''), novelty: 0.5 });
+      else if (intent.action === 'note') {
+        this.learn(soulId, { kind: 'note', text: String(intent.text || ''), novelty: 0.5 });
+        const a = this.learning.active(soulId);
+        if (a) this.learning.observeTopic(soulId, a.topic);
+      }
       else if (intent.action === 'diary') this.learn(soulId, { kind: 'diary', text: String(intent.text || ''), novelty: 0.5 });
     } catch { /* 忽略 */ }
   }
@@ -155,6 +162,7 @@ export class Growth {
   line(soulId) {
     try {
       if (!this.cfg.enabled) return '';
+      try { this.learning.seed(soulId); } catch { /* 忽略 */ }
       const st = this.load(soulId);
       const top = SKILLS.map((k) => ({ k, level: st.skills[k]?.level || 0 })).sort((a, b) => b.level - a.level)[0];
       const bits = [];
@@ -162,6 +170,7 @@ export class Growth {
       const t = st.traits || {};
       if ((t.curiosity || 0) > 0.6) bits.push('你最近比以前更好奇。');
       if ((t.order || 0) > 0.6) bits.push('你最近比以前更想整理东西。');
+      try { const l = this.learning.line(soulId); if (l) bits.push(l); } catch { /* 忽略 */ }
       return bits.join(' ');
     } catch { return ''; }
   }
