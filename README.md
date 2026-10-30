@@ -9,7 +9,7 @@
 
 ```bash
 # Node >= 22.13
-git clone https://github.com/<you>/soul-of-existeon.git
+git clone https://github.com/SGorgeous/soul-of-existeon.git
 cd soul-of-existeon
 
 # 方式 1：环境变量
